@@ -14,7 +14,9 @@ Save:
 Metodo post : /api/persona
 
 Json {
+
    "persona":{
+   
       "id": {LONG VALUE}(no puede ser nulo),
       
       "nombreCompleto": {STRING VALUE}(no puede ser nulo),
@@ -34,7 +36,9 @@ Json {
       "diabetico":{BOOLEAN}
       
    },
+   
    "otraEnfermedadList":[
+   
       {
       
          "id":{LONG VALUE},
