@@ -104,3 +104,9 @@ Json {
 
 Delete: 
 Metodo delete : /api/persona/{ID}
+
+------------------------------------------------------------------
+
+Los tests unitarios se encuentran en src\test
+
+
