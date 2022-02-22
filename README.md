@@ -8,7 +8,7 @@ FindAll:
 Metodo get : /api/persona
 
 FindOne: 
-Metodo get : /api/persona/{VALUE}
+Metodo get : /api/persona/{ID}
 
 Save: 
 Metodo post : /api/persona
@@ -60,4 +60,4 @@ Json {
 }
 
 Delete: 
-Metodo delete : /api/persona/{VALUE}
+Metodo delete : /api/persona/{ID}
