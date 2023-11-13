@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 @Service
 @Slf4j
@@ -35,13 +32,9 @@ public class PersonServiceImpl implements PersonService {
 
     private final PersonDao personDao;
 
-    private final WeatherService weatherService;
-
     private final CityDao cityDao;
 
     private final static Set<String> CITIES = new HashSet<>(Arrays.asList("CORDOBA", "BUENOS AIRES", "ROSARIO"));
-
-    private final Lock lock = new ReentrantLock();
 
     public List<PersonDto> findAll() {
 
@@ -99,17 +92,13 @@ public class PersonServiceImpl implements PersonService {
         }
     }
 
-    @Async
     public WeatherResponseDto getWeather(String cityName) {
-        lock.lock();
         WeatherResponseDto responseDto = null;
-        try {
-            if (CITIES.contains(cityName.toUpperCase())) {
-                City city = cityDao.findByCityName(cityName.toUpperCase());
-                responseDto = weatherService.weatherResponse(city);
-            }
-        } finally {
-            lock.unlock();
+        if (CITIES.contains(cityName.toUpperCase())) {
+            City city = cityDao.findByCityName(cityName.toUpperCase());
+            responseDto = new WeatherResponseDto();
+            responseDto.setTemperature(city.getTemp());
+            responseDto.setCity(cityName);
         }
         return responseDto;
 

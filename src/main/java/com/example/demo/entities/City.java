@@ -36,4 +36,7 @@ public class City {
 
     @Column(name = "FORECAST_DAYS")
     private Integer forecastDays;
+
+    @Column(name = "TEMPERATURE")
+    private String temp;
 }
