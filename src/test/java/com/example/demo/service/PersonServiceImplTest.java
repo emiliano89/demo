@@ -164,16 +164,18 @@ public class PersonServiceImplTest {
         //given
         City city = Mockito.mock(City.class);
         String c = "CORDOBA";
+        String temp = "25";
         WeatherResponseDto expected = new WeatherResponseDto();
         expected.setCity(c);
-        expected.setTemperature("25");
+        expected.setTemperature(temp);
+        when(city.getTemp()).thenReturn(temp);
         when(cityDao.findByCityName(c)).thenReturn(city);
-        when(weatherService.weatherResponse(city)).thenReturn(expected);
 
         //when
         WeatherResponseDto response  = personServiceImpl.getWeather(c);
 
         //then
-        assertEquals(expected, response);
+        assertEquals(expected.getTemperature(), response.getTemperature());
+        assertEquals(expected.getCity(), response.getCity());
     }
 }

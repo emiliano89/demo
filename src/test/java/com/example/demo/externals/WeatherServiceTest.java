@@ -1,5 +1,6 @@
 package com.example.demo.externals;
 
+import com.example.demo.dao.CityDao;
 import com.example.demo.dto.CurrentDto;
 import com.example.demo.dto.WeatherResponseDto;
 import com.example.demo.dto.WeatherServiceResponseDto;
@@ -16,8 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @RunWith(MockitoJUnitRunner.class)
@@ -25,6 +30,9 @@ public class WeatherServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private CityDao cityDao;
 
     @InjectMocks
     private WeatherService service;
@@ -64,5 +72,31 @@ public class WeatherServiceTest {
 
         //then
         assertNull(result);
+    }
+
+    @Test
+    public void getWeather() {
+        //given
+        City city = Mockito.mock(City.class);
+        String c = "CORDOBA";
+        String temp = "25";
+        Exception exception = null;
+        WeatherResponseDto expected = new WeatherResponseDto();
+        expected.setCity(c);
+        expected.setTemperature(temp);
+        List<City> cityList = new ArrayList<>();
+        cityList.add(city);
+        when(cityDao.findAll()).thenReturn(cityList);
+
+        //when
+        try {
+            service.getWeather();
+        } catch (Exception e) {
+            exception = e;
+        }
+
+
+        //then
+        assertNull(exception);
     }
 }

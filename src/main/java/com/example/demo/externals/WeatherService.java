@@ -17,7 +17,6 @@ import java.util.List;
 
 @Service
 @Slf4j
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class WeatherService {
 
     @Value("${url.weather}")
@@ -29,9 +28,6 @@ public class WeatherService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public WeatherService(String url) {
-        this.url = url;
-    }
 
     public WeatherResponseDto weatherResponse(City city) {
         WeatherServiceResponseDto responseDto;
